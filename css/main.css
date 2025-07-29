@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: rgb(4, 80, 1);
 }
 
 /*main*/
@@ -30,6 +31,7 @@ button {
     width: 170px;
     font-size: 2em;
     font-family: Calibri, sans-serif;
+    background-color: beige;
 }
 
 /*cards*/

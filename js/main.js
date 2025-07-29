@@ -1,29 +1,5 @@
-// fonctio n qui fait le fetch(), qui contacte l'API
-async function callAPI(uri) {
-    console.log("-- callAPI - start --")
-    console.log("uri = ", uri)
-
-    //fetch(), appel à l'API et réception de la réponse
-    const response = null;
-    await fetch(uri)
-        .then( response => response )
-        .catch(alert("pas ok"))
-
-    console.log('response = ', response)
-
-    //récupération des données JSON reçues de l'API
-    const data = await response.json()
-    console.log("data = ", data)
-
-    console.log("-- callAPI - end --")
-
-    //renvoi des données
-    return data
-}
-
 //variable globale: l'id du deck utilisé, dans lequel on pioche
 let idDeck = null;
-
 
 //constante globale: URI du endpoint de demande du nouveau deck
 const API_ENDPOINT_NEW_DECK = "https://deckofcardsapi.com/api/deck/new/"
@@ -33,6 +9,7 @@ const getApiEndpointShuffleDeck =() => `https://deckofcardsapi.com/api/deck/${id
 const getApiEndpointDrawCard = () => `https://deckofcardsapi.com/api/deck/${idDeck}/draw/?count=1`
 //_________________: élément HTML ustile pour la manipulation du DOM
 const cardsContainer = document.getElementById("cards-container")
+
 /*
 * mis en place de l'écoute d'événement des deux boutons
 */
@@ -43,6 +20,37 @@ const actionDrawButton = document.getElementById("action-draw")
 actionResetButton.addEventListener("click", actionReset)
 actionDrawButton.addEventListener("click", actionDraw)
 
+// fonction qui fait le fetch(), qui contacte l'API
+async function callAPI(uri) {
+    console.log("-- callAPI - start --")
+    console.log("uri = ", uri)
+ 
+    //fetch(), appel à l'API et réception de la réponse + affichage message en console en cas d'erreur
+    const data = fetch(uri)
+        .then ((response) =>{
+            return response.json();
+        })
+        .catch(() =>{ console.error("Quelque chose ne va pas du tout avec l'API!")})
+    /*
+            const response = await fetch(uri);
+            const data = await response.json();
+
+    console.log('response = ', response)
+
+    //récupération des données JSON reçues de l'API
+    */
+    console.log("data = ", data)
+
+    console.log("-- callAPI - end --")
+
+    //renvoi des données
+    return data
+
+
+}
+
+
+
 /*
 *   actions techniques
 */
@@ -51,6 +59,7 @@ actionDrawButton.addEventListener("click", actionDraw)
         console.log(">> getNewDeck()")
         return await callAPI(API_ENDPOINT_NEW_DECK)
     }
+
     //fction de demande de mélange du deck selon ID
     async function shuffleDeck() {
         console.log(">> shuffleDeck()")
